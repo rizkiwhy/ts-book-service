@@ -1,0 +1,19 @@
+{
+  "name": "ts-book-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rizkiwhy/ts-book-service.git"
+  },
+  "author": "rizkiwhy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rizkiwhy/ts-book-service/issues"
+  },
+  "homepage": "https://github.com/rizkiwhy/ts-book-service#readme"
+}
