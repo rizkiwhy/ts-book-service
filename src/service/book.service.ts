@@ -5,6 +5,36 @@ import { BookValidation } from "../validation/book.validation";
 import { Validation } from "../validation/validation";
 
 export class BookService {
+
+    static async GetBooks(): Promise<BookResponse[]> {
+        const books = await prismaClient.book.findMany({
+            include: {
+                author: true,
+                genres: {
+                    select: {
+                        genre_id: true
+                    }
+                }
+            }
+        })
+
+        const genres = await prismaClient.genre.findMany()
+
+        const bookResponses: BookResponse[] = []
+        for (const book of books) {
+            const bookGenres = genres.filter(genre => book.genres.some(bookGenre => bookGenre.genre_id === genre.id))
+            console.log(bookGenres)
+            // Extract the genre names into an array
+            const genreNames = bookGenres.map(genre => genre.name);
+            console.log(genreNames);
+
+            bookResponses.push(BookDTO.toBookResponse(book, book.author, bookGenres))
+        }
+
+          
+        return bookResponses
+        // return books.map(book => BookDTO.toBookResponse(book, book.author, book.genres))
+    }
     
     static async CreateBook(request: CreateBookRequest): Promise<BookResponse> {
         const createBookRequest = Validation.validate(request, BookValidation.CREATE)

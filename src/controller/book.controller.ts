@@ -15,4 +15,15 @@ export class BookController {
             next(error)
         }
     }
+
+    static async getBooks(req: Request, res: Response, next: NextFunction) {
+        try {
+            const response = await BookService.GetBooks()
+            res.status(200).json({
+                data: response
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
 }
