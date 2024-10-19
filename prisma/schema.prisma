@@ -26,20 +26,21 @@ model genre {
 }
 
 model book {
-  id            String @id @default(uuid())
-  title         String
-  authorId      String
-  author        author @relation(fields: [authorId], references: [id])
-  publihedYear  Int
-  genres        book_genre[]
-  createdAt     DateTime @default(now())
+  id              String @id @default(uuid())
+  title           String @unique
+  author_id       String
+  author          author @relation(fields: [author_id], references: [id])
+  published_year  Int
+  genres          book_genre[]
+  stock           Int?
+  createdAt       DateTime @default(now())
 }
 
 model book_genre {
-  book       book @relation(fields: [bookId], references: [id])
-  bookId     String
-  genre      genre @relation(fields: [genreId], references: [id])
-  genreId    String
+  book       book @relation(fields: [book_id], references: [id])
+  book_id     String
+  genre      genre @relation(fields: [genre_id], references: [id])
+  genre_id    String
 
-  @@id([bookId, genreId])
+  @@id([book_id, genre_id])
 }
