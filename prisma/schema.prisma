@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Author {
+  id       String @id @default(uuid())
+  name     String
+  books    Book[]
+}
+
+model Genre {
+  id    String    @id @default(uuid())
+  name  String
+  books BookGenre[]
+}
+
+model Book {
+  id            String @id @default(uuid())
+  title         String
+  authorId      String
+  author        Author @relation(fields: [authorId], references: [id])
+  publihedYear  Int
+  genres        BookGenre[]
+  createdAt     DateTime @default(now())
+}
+
+model BookGenre {
+  book       Book @relation(fields: [bookId], references: [id])
+  bookId     String
+  genre      Genre @relation(fields: [genreId], references: [id])
+  genreId    String
+
+  @@id([bookId, genreId])
+}
