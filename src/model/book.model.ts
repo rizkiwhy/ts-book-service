@@ -1,14 +1,6 @@
 import { author, book, genre } from '@prisma/client';
 import { randomUUID } from 'crypto';
 
-// export type Book = {
-//     id: string
-//     title: string
-//     authorId: string
-//     publishedYear: number
-//     stock?: number
-// }
-
 export type BookResponse = {
     id: string
     title: string
