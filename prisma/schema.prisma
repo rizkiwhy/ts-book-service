@@ -13,32 +13,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Author {
+model author {
   id       String @id @default(uuid())
   name     String
-  books    Book[]
+  books    book[]
 }
 
-model Genre {
+model genre {
   id    String    @id @default(uuid())
   name  String
-  books BookGenre[]
+  books book_genre[]
 }
 
-model Book {
+model book {
   id            String @id @default(uuid())
   title         String
   authorId      String
-  author        Author @relation(fields: [authorId], references: [id])
+  author        author @relation(fields: [authorId], references: [id])
   publihedYear  Int
-  genres        BookGenre[]
+  genres        book_genre[]
   createdAt     DateTime @default(now())
 }
 
-model BookGenre {
-  book       Book @relation(fields: [bookId], references: [id])
+model book_genre {
+  book       book @relation(fields: [bookId], references: [id])
   bookId     String
-  genre      Genre @relation(fields: [genreId], references: [id])
+  genre      genre @relation(fields: [genreId], references: [id])
   genreId    String
 
   @@id([bookId, genreId])
